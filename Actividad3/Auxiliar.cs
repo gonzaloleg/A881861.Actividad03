@@ -11,7 +11,7 @@ namespace Actividad3
     {
         const string archivo = "plandecuentas.txt";
 
-        internal static void Mostrar()
+        internal static void MostrarPlan()
         {    
                 using (var reader = new StreamReader(archivo))
 
@@ -46,6 +46,51 @@ namespace Actividad3
             return res;
         }
 
-       
+        internal static DateTime ValidarFecha(string mensaje)
+        {
+            DateTime valor;
+            bool ok = false;
+            
+            do
+            {
+                Console.WriteLine(mensaje);
+                if (!DateTime.TryParse(Console.ReadLine(), out valor))
+                {
+                    Console.WriteLine("Ingreso inválido. Formato MM/DD/AAAA.");
+                }
+                else if (valor > DateTime.Now)
+                {
+                    Console.WriteLine("El asiento no puede registrarse en el futuro.");
+                }
+                else
+                {
+                    ok = true;
+                }
+            } while (!ok);
+
+            return valor;
+
+        }
+
+        internal static decimal ValidarMonto(string mensaje, int min, decimal max)
+        {
+            int res;
+
+            do
+            {
+
+                Console.WriteLine(mensaje);
+                Console.WriteLine($"\nNo puede ingresar un valor menor a : {min} \nNo puede ingresar un valor mayor a: {max}");
+
+                if (!int.TryParse(Console.ReadLine(), out res))
+                {
+                    Console.WriteLine("Por favor ingrese un número válido.");
+                    res = -1;
+                }
+
+            } while (res < min || res > max);
+
+            return res;
+        }
     }
 }

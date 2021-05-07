@@ -9,15 +9,21 @@ namespace Actividad3
 {
     class Program
     {
+        public static List<Asiento> asientos = new List<Asiento>();
+
         static void Main(string[] args)
         {
             Console.WriteLine("Presione una tecla para visualizar el Plan de Cuentas..\n");
             Console.ReadKey();
-            Auxiliar.Mostrar();
+            Auxiliar.MostrarPlan();
             Console.ReadKey();
             Console.WriteLine("\nPresiona una tecla para cargar un asiento");
                         
             Asiento.Agregar();
+            Asiento.Agregar();
+
+            Asiento.Listar();
+            Console.ReadKey();
         }
     }
 }
