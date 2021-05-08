@@ -25,7 +25,7 @@ namespace Actividad3
                        
         }
 
-        internal static int ValidarCodigo(string mensaje, int min , int max)
+        internal static int ValidarOpcion(string mensaje, int min , int max)
         {
             int res;
 
