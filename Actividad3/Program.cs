@@ -9,12 +9,11 @@ namespace Actividad3
 {
     class Program
     {
-        public static List<Asiento> asientos = new List<Asiento>();
-
         static void Main(string[] args)
         {
             Console.WriteLine("Presione una tecla para visualizar comenzar.\n");            
             Console.ReadKey();
+            
 
             bool salir = false;
             int opcion;

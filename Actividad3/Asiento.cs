@@ -20,14 +20,14 @@ namespace Actividad3
             Numero = numero;
         }
 
-        string diario = "Diario.txt";
+        const string diario = "Diario.txt";
         public decimal Debe { get; }
         public int Numero { get; }
         public decimal Haber { get; }
         public int CodigoCuenta { get; }
         public DateTime Fecha { get; }
 
-        public void LevantarArchivo()
+        internal static void LlenarDiario()
         {
             if (File.Exists(diario))
             {
@@ -36,13 +36,27 @@ namespace Actividad3
                     while (!reader.EndOfStream)
                     {
                         var linea = reader.ReadLine();
-                        var elDiario = new Diario(linea);
-                        unDiario.Add(elDiario);
+                        var update = new Asiento(linea);
+                        asientos.Add(update);
                     }
                 }
             }
         }
+        public Asiento(string linea)
+        {
+            var datos = linea.Split('|');
+            Numero = int.Parse(datos[0]);
+            Fecha = DateTime.Parse(datos[1]);
+            CodigoCuenta = int.Parse(datos[2]);
+            Debe = decimal.Parse(datos[3]);
+            Haber = decimal.Parse(datos[4]);
+        }
 
+        internal static int ObtenerUltimoNumero()
+        {
+            int item = (asientos[asientos.Count - 1].Numero);
+            return item;
+        }
 
         internal static void Listar()
         {
@@ -59,17 +73,24 @@ namespace Actividad3
 
         internal static void Agregar()
         {
-            int codigoCuenta = Auxiliar.ValidarOpcion("Ingrese el código de cuenta", 11, 34);
-            int numero = 1;
-            
+            decimal acumuladorDebe = 0;
+            decimal acumuladorHaber = 0;
+            LlenarDiario();
+            int numero = ObtenerUltimoNumero() + 1;
+
+            int codigoCuenta = Auxiliar.ValidarOpcion("Ingrese el código de cuenta", 11, 34);                       
             DateTime fecha = Auxiliar.ValidarFecha("Ingrese la fecha del asiento (formato MM/DD/AAAA):");                   
                                                                               //Tope arbitrario
             decimal debe = Auxiliar.ValidarMonto("Ingrese el monto para el debe:", 0, 99999999);
+            acumuladorDebe =+ debe;
             decimal haber = Auxiliar.ValidarMonto("Ingrese el monto para el haber:", 0, 99999999);
+            acumuladorHaber =+ haber;
 
             Asiento nuevoAsiento = new Asiento(debe, haber, codigoCuenta, fecha, numero);
 
             asientos.Add(nuevoAsiento);
+
+            Console.WriteLine("Agregar movimiento destino:");
 
         }
 
