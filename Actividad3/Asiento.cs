@@ -132,16 +132,28 @@ namespace Actividad3
 
                 if (opcion == 1)
                 {
-                    codigoCuenta = Auxiliar.ValidarOpcion("Ingrese el código de cuenta", 11, 34);
-                    debe = Auxiliar.ValidarMonto("Ingrese el monto para el debe:", 0, 99999999);
-                    acumuladorDebe = acumuladorDebe+debe;
-                    haber = Auxiliar.ValidarMonto("Ingrese el monto para el haber:", 0, 99999999);
-                    acumuladorHaber = acumuladorHaber+haber;
-                    Asiento nuevoMovimiento2 = new Asiento(debe, haber, codigoCuenta, fecha, numero);
+                    Console.WriteLine("¿Cuantos movimientos más desea incorporar al asiento?");
+                    string ingreso = Console.ReadLine();
+                    int cantidad = 0;
+                    if (!int.TryParse(ingreso, out cantidad))
+                    {
+                        Console.WriteLine("Debe ingresar un número.");
+                        continue;
+                    }
                     
+                    for (int i = 0; i < cantidad; i++)
+                    {
+                        codigoCuenta = Auxiliar.ValidarOpcion("Ingrese el código de cuenta", 11, 34);
+                        debe = Auxiliar.ValidarMonto("Ingrese el monto para el debe:", 0, 99999999);
+                        acumuladorDebe = acumuladorDebe + debe;
+                        haber = Auxiliar.ValidarMonto("Ingrese el monto para el haber:", 0, 99999999);
+                        acumuladorHaber = acumuladorHaber + haber;
+                        Asiento nuevoMovimiento2 = new Asiento(debe, haber, codigoCuenta, fecha, numero);
+                        asientos.Add(nuevoMovimiento2);
+
+                    }
                     if (acumuladorHaber == acumuladorDebe)
                     {
-                        asientos.Add(nuevoMovimiento2);
                         Grabar();
                         Console.WriteLine("Asiento grabado en Diario.txt");
                         salir = true;
@@ -149,10 +161,10 @@ namespace Actividad3
                     else
                     {
                         Console.WriteLine("Principio contable no cumplido (Debe no es igual a Haber). Asiento descartado.");
-                        asientos.Remove(nuevoAsiento);
-                        asientos.Remove(nuevoMovimiento);
+                        asientos.RemoveRange(asientos.Count - (cantidad + 2), cantidad + 2);
+                        salir = true;
                     }
-                    
+
 
                 }
                 if (opcion == 2)
@@ -193,7 +205,7 @@ namespace Actividad3
 
             } while (!salir);
 
-        }       
-
+        }
+        
     }
 }

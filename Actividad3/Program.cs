@@ -13,8 +13,6 @@ namespace Actividad3
         {
             Console.WriteLine("Presione una tecla para visualizar comenzar.\n");            
             Console.ReadKey();
-
-
             Asiento.Agregar();
             Console.ReadKey();
         }
