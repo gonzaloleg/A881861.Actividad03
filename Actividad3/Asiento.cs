@@ -69,10 +69,26 @@ namespace Actividad3
                 Console.Write(asiento.Haber);
                 Console.WriteLine();                
             }
-        }       
+        }
+        public void Grabar()
+        {
+            using (var writer = new StreamWriter(diario, append: false))
+            {
+                foreach (var asiento in asientos)
+                {
+                    var linea = asiento.GetLinea();
+                    writer.WriteLine(linea);
+                }
+            }
+        }
+        private object GetLinea() 
+        { 
+          return  $"{Numero}|{Fecha}|{CodigoCuenta}|{Debe}|{Haber}";
+        }
 
         internal static void Agregar()
         {
+            Auxiliar.MostrarPlan();
             decimal acumuladorDebe = 0;
             decimal acumuladorHaber = 0;
             LlenarDiario();
@@ -91,6 +107,30 @@ namespace Actividad3
             asientos.Add(nuevoAsiento);
 
             Console.WriteLine("Agregar movimiento destino:");
+            codigoCuenta = Auxiliar.ValidarOpcion("Ingrese el código de cuenta", 11, 34);
+            debe = Auxiliar.ValidarMonto("Ingrese el monto para el debe:", 0, 99999999);
+            acumuladorDebe = +debe;
+            haber = Auxiliar.ValidarMonto("Ingrese el monto para el haber:", 0, 99999999);
+            acumuladorHaber = +haber;
+            Asiento nuevoMovimiento = new Asiento(debe, haber, codigoCuenta, fecha, numero);
+
+            asientos.Add(nuevoMovimiento);
+
+            bool salir = false;
+            //int opcion;
+            do
+            {
+                Console.WriteLine("¿Desea ingresar otro movimiento para el asiento en curso?");
+                int opcion = Auxiliar.ValidarOpcion("1- SI         2-NO", 1, 2);
+
+                if (opcion == 1)
+                {
+
+                }
+                
+
+            } while (!salir);
+
 
         }
 
