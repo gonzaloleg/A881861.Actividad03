@@ -11,7 +11,7 @@ namespace Actividad3
     {
         static void Main(string[] args)
         {
-            Console.WriteLine("Presione una tecla para comenzar.\n");            
+            Console.WriteLine("Presione una tecla para comenzar. \n");            
             Console.ReadKey();
             Asiento.Agregar();
         }
