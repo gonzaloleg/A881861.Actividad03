@@ -89,7 +89,7 @@ namespace Actividad3
             LlenarDiario();
             int numero = ObtenerUltimoNumero() + 1;
 
-            int codigoCuenta = Auxiliar.ValidarOpcion("\nIngrese el código de cuenta", 11, 34);                       
+            int codigoCuenta = Auxiliar.ValidarOpcion("\nIngrese el código de cuenta:", 11, 34);                       
             DateTime fecha = Auxiliar.ValidarFecha("\nIngrese la fecha del asiento (formato MM/DD/AAAA):");                   
                                                                               //Tope arbitrario
             decimal debe = Auxiliar.ValidarMonto("\nIngrese el monto para el debe:", 0, 99999999);
@@ -101,8 +101,8 @@ namespace Actividad3
 
             asientos.Add(nuevoAsiento);
 
-            Console.WriteLine("\nAgregar movimiento destino:");
-            codigoCuenta = Auxiliar.ValidarOpcion("Ingrese el código de cuenta", 11, 34);
+            Console.WriteLine("\nAgregando movimiento(s) destino...");
+            codigoCuenta = Auxiliar.ValidarOpcion("Ingrese el código de cuenta:", 11, 34);
             debe = Auxiliar.ValidarMonto("\nIngrese el monto para el debe:", 0, 99999999);
             acumuladorDebe = acumuladorDebe+debe;
             haber = Auxiliar.ValidarMonto("\nIngrese el monto para el haber:", 0, 99999999);
@@ -120,18 +120,11 @@ namespace Actividad3
 
                 if (opcion == 1)
                 {
-                    Console.WriteLine("\n¿Cuantos movimientos más desea incorporar al asiento?");
-                    string ingreso = Console.ReadLine();
-                    int cantidad = 0;
-                    if (!int.TryParse(ingreso, out cantidad))
-                    {
-                        Console.WriteLine("Debe ingresar un número.");
-                        continue;
-                    }
+                    int cantidad = Auxiliar.ValidarInput();                    
                     
                     for (int i = 0; i < cantidad; i++)
                     {
-                        codigoCuenta = Auxiliar.ValidarOpcion("\nIngrese el código de cuenta", 11, 34);
+                        codigoCuenta = Auxiliar.ValidarOpcion("\nIngrese el código de cuenta:", 11, 34);
                         debe = Auxiliar.ValidarMonto("\nIngrese el monto para el debe:", 0, 99999999);
                         acumuladorDebe = acumuladorDebe + debe;
                         haber = Auxiliar.ValidarMonto("\nIngrese el monto para el haber:", 0, 99999999);
@@ -143,7 +136,7 @@ namespace Actividad3
                     if (acumuladorHaber == acumuladorDebe)
                     {
                         Grabar();
-                        Console.WriteLine("\nAsiento grabado en Diario.txt");
+                        Console.WriteLine("\nEl asiento ha sido grabado exitosamente en Diario.txt.");
                         salir = true;
                     }
                     else

@@ -46,6 +46,29 @@ namespace Actividad3
             return res;
         }
 
+        internal static int ValidarInput()
+        {
+            int cantidad = 0;
+            while (true)
+            {
+                Console.WriteLine("\n¿Cuantos movimientos más desea incorporar al asiento ? ");
+                var ingreso = Console.ReadLine();
+                if (!int.TryParse(ingreso, out cantidad))
+                {
+                    Console.WriteLine("No ha ingresado un valor numérico válido.");
+                    continue;
+                }
+
+                if (cantidad <= 0)
+                {
+                    Console.WriteLine("La cantidad debe ser mayor a 0.");
+                    continue;
+                }
+
+                return cantidad;
+            }
+        }
+
         internal static DateTime ValidarFecha(string mensaje)
         {
             DateTime valor;
