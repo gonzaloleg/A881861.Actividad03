@@ -30,13 +30,13 @@ namespace Actividad3
         internal static void LlenarDiario()
         {
             if (File.Exists(diario))
-            {
+            {                
                 using (var reader = new StreamReader(diario))
                 {
                     while (!reader.EndOfStream)
                     {
                         var linea = reader.ReadLine();
-                        var update = new Asiento(linea);
+                        var update = new Asiento(linea);                       
                         asientos.Add(update);
                     }
                 }
@@ -44,12 +44,12 @@ namespace Actividad3
         }
         public Asiento(string linea)
         {
-            var datos = linea.Split('|');
-            Numero = int.Parse(datos[0]);
-            Fecha = DateTime.Parse(datos[1]);
-            CodigoCuenta = int.Parse(datos[2]);
-            Debe = decimal.Parse(datos[3]);
-            Haber = decimal.Parse(datos[4]);
+            var input = linea.Split('|');
+            Numero = int.Parse(input[0]);
+            Fecha = DateTime.Parse(input[1]);
+            CodigoCuenta = int.Parse(input[2]);
+            Debe = decimal.Parse(input[3]);
+            Haber = decimal.Parse(input[4]);
         }
 
         internal static int ObtenerUltimoNumero()
@@ -64,19 +64,7 @@ namespace Actividad3
                 return 0;
             }
         }
-
-        internal static void Listar()
-        {
-            foreach (Asiento asiento in asientos)
-            {
-                Console.Write(asiento.Numero + "|");
-                Console.Write(asiento.Fecha + "|");
-                Console.Write(asiento.CodigoCuenta + "|");
-                Console.Write(asiento.Debe + "|");
-                Console.Write(asiento.Haber);
-                Console.WriteLine();                
-            }
-        }
+        
         internal static void Grabar()
         {
             using (var writer = new StreamWriter(diario, append: false))
@@ -101,23 +89,23 @@ namespace Actividad3
             LlenarDiario();
             int numero = ObtenerUltimoNumero() + 1;
 
-            int codigoCuenta = Auxiliar.ValidarOpcion("Ingrese el código de cuenta", 11, 34);                       
-            DateTime fecha = Auxiliar.ValidarFecha("Ingrese la fecha del asiento (formato MM/DD/AAAA):");                   
+            int codigoCuenta = Auxiliar.ValidarOpcion("\nIngrese el código de cuenta", 11, 34);                       
+            DateTime fecha = Auxiliar.ValidarFecha("\nIngrese la fecha del asiento (formato MM/DD/AAAA):");                   
                                                                               //Tope arbitrario
-            decimal debe = Auxiliar.ValidarMonto("Ingrese el monto para el debe:", 0, 99999999);
+            decimal debe = Auxiliar.ValidarMonto("\nIngrese el monto para el debe:", 0, 99999999);
             acumuladorDebe = acumuladorDebe + debe;
-            decimal haber = Auxiliar.ValidarMonto("Ingrese el monto para el haber:", 0, 99999999);
+            decimal haber = Auxiliar.ValidarMonto("\nIngrese el monto para el haber:", 0, 99999999);
             acumuladorHaber = acumuladorHaber + haber;
 
             Asiento nuevoAsiento = new Asiento(debe, haber, codigoCuenta, fecha, numero);
 
             asientos.Add(nuevoAsiento);
 
-            Console.WriteLine("Agregar movimiento destino:");
+            Console.WriteLine("\nAgregar movimiento destino:");
             codigoCuenta = Auxiliar.ValidarOpcion("Ingrese el código de cuenta", 11, 34);
-            debe = Auxiliar.ValidarMonto("Ingrese el monto para el debe:", 0, 99999999);
+            debe = Auxiliar.ValidarMonto("\nIngrese el monto para el debe:", 0, 99999999);
             acumuladorDebe = acumuladorDebe+debe;
-            haber = Auxiliar.ValidarMonto("Ingrese el monto para el haber:", 0, 99999999);
+            haber = Auxiliar.ValidarMonto("\nIngrese el monto para el haber:", 0, 99999999);
             acumuladorHaber = acumuladorHaber+haber;
             Asiento nuevoMovimiento = new Asiento(debe, haber, codigoCuenta, fecha, numero);
 
@@ -127,12 +115,12 @@ namespace Actividad3
             
             do
             {
-                Console.WriteLine("¿Desea ingresar otro movimiento para el asiento en curso?");
+                Console.WriteLine("\n¿Desea ingresar otro movimiento para el asiento en curso?");
                 int opcion = Auxiliar.ValidarOpcion("1- SI         2-NO (GRABAR ASIENTO EN DIARIO)", 1, 2);
 
                 if (opcion == 1)
                 {
-                    Console.WriteLine("¿Cuantos movimientos más desea incorporar al asiento?");
+                    Console.WriteLine("\n¿Cuantos movimientos más desea incorporar al asiento?");
                     string ingreso = Console.ReadLine();
                     int cantidad = 0;
                     if (!int.TryParse(ingreso, out cantidad))
@@ -143,10 +131,10 @@ namespace Actividad3
                     
                     for (int i = 0; i < cantidad; i++)
                     {
-                        codigoCuenta = Auxiliar.ValidarOpcion("Ingrese el código de cuenta", 11, 34);
-                        debe = Auxiliar.ValidarMonto("Ingrese el monto para el debe:", 0, 99999999);
+                        codigoCuenta = Auxiliar.ValidarOpcion("\nIngrese el código de cuenta", 11, 34);
+                        debe = Auxiliar.ValidarMonto("\nIngrese el monto para el debe:", 0, 99999999);
                         acumuladorDebe = acumuladorDebe + debe;
-                        haber = Auxiliar.ValidarMonto("Ingrese el monto para el haber:", 0, 99999999);
+                        haber = Auxiliar.ValidarMonto("\nIngrese el monto para el haber:", 0, 99999999);
                         acumuladorHaber = acumuladorHaber + haber;
                         Asiento nuevoMovimiento2 = new Asiento(debe, haber, codigoCuenta, fecha, numero);
                         asientos.Add(nuevoMovimiento2);
@@ -155,12 +143,12 @@ namespace Actividad3
                     if (acumuladorHaber == acumuladorDebe)
                     {
                         Grabar();
-                        Console.WriteLine("Asiento grabado en Diario.txt");
+                        Console.WriteLine("\nAsiento grabado en Diario.txt");
                         salir = true;
                     }
                     else
                     {
-                        Console.WriteLine("Principio contable no cumplido (Debe no es igual a Haber). Asiento descartado.");
+                        Console.WriteLine("\nPrincipio contable no cumplido (Debe no es igual a Haber). Asiento descartado.");
                         asientos.RemoveRange(asientos.Count - (cantidad + 2), cantidad + 2);
                         salir = true;
                     }
@@ -172,14 +160,14 @@ namespace Actividad3
                     if (acumuladorDebe == acumuladorHaber)
                     {
                         Grabar();
-                        Console.WriteLine("El asiento ha sido grabado exitosamente en Diario.txt.");
+                        Console.WriteLine("\nEl asiento ha sido grabado exitosamente en Diario.txt.");
                         salir = true;
                     }
                     else
                     {
                         asientos.Remove(nuevoAsiento);
                         asientos.Remove(nuevoMovimiento);                        
-                        Console.WriteLine("Principio contable no cumplido (Debe no es igual a Haber). Asiento descartado.");                        
+                        Console.WriteLine("\nPrincipio contable no cumplido (Debe no es igual a Haber). Asiento descartado.");                        
                         salir = true;                       
                     }
                 }
@@ -191,16 +179,19 @@ namespace Actividad3
 
             do
             {
-                Console.WriteLine("¿Desea ingresar otro asiento?");
+                Console.WriteLine("\n¿Desea ingresar otro asiento?");
                 int opcion2 = Auxiliar.ValidarOpcion("1- SI         2-NO (SALIR)", 1, 2);
 
                 if (opcion2 == 1)
                 {
+                    asientos.Clear();
                     Agregar();
                 }
                 if (opcion2 == 2)
                 {
-                    salir = true;
+                    Console.WriteLine("\nPrograma finalizado. Presione cualquier tecla para salir.");
+                    Console.ReadKey();
+                    System.Environment.Exit(0);                    
                 }
 
             } while (!salir);

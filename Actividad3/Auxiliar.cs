@@ -33,7 +33,7 @@ namespace Actividad3
             {
 
                 Console.WriteLine(mensaje);
-                Console.WriteLine($"\nNo puede ingresar un valor menor a : {min} \nNo puede ingresar un valor mayor a: {max}");
+                Console.WriteLine($"\nNo puede ingresar un valor menor a: {min} \nNo puede ingresar un valor mayor a: {max}");
 
                 if (!int.TryParse(Console.ReadLine(), out res))
                 {
@@ -72,17 +72,17 @@ namespace Actividad3
 
         }
 
-        internal static decimal ValidarMonto(string mensaje, int min, decimal max)
+        internal static decimal ValidarMonto(string mensaje, decimal min, decimal max)
         {
-            int res;
+            decimal res;
 
             do
             {
 
                 Console.WriteLine(mensaje);
-                Console.WriteLine($"\nNo puede ingresar un valor menor a : {min} \nNo puede ingresar un valor mayor a: {max}");
+                Console.WriteLine($"\nNo puede ingresar un valor menor a: {min} \nNo puede ingresar un valor mayor a: {max}");
 
-                if (!int.TryParse(Console.ReadLine(), out res))
+                if (!decimal.TryParse(Console.ReadLine(), out res))
                 {
                     Console.WriteLine("Por favor ingrese un número válido.");
                     res = -1;
