@@ -83,6 +83,8 @@ namespace Actividad3
 
         internal static void Agregar()
         {
+            Console.WriteLine("**********PLAN DE CUENTAS**********");
+            Console.WriteLine();
             Auxiliar.MostrarPlan();
             decimal acumuladorDebe = 0;
             decimal acumuladorHaber = 0;

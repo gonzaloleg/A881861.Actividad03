@@ -37,7 +37,7 @@ namespace Actividad3
 
                 if (!int.TryParse(Console.ReadLine(), out res))
                 {
-                    Console.WriteLine("Por favor ingrese un número válido.");
+                    Console.WriteLine("\nPor favor ingrese un número válido.");
                     res = -1;
                 }
 
@@ -55,13 +55,13 @@ namespace Actividad3
                 var ingreso = Console.ReadLine();
                 if (!int.TryParse(ingreso, out cantidad))
                 {
-                    Console.WriteLine("No ha ingresado un valor numérico válido.");
+                    Console.WriteLine("\nNo ha ingresado un valor numérico válido.");
                     continue;
                 }
 
                 if (cantidad <= 0)
                 {
-                    Console.WriteLine("La cantidad debe ser mayor a 0.");
+                    Console.WriteLine("\nLa cantidad debe ser mayor a 0.");
                     continue;
                 }
 
@@ -79,11 +79,11 @@ namespace Actividad3
                 Console.WriteLine(mensaje);
                 if (!DateTime.TryParse(Console.ReadLine(), out valor))
                 {
-                    Console.WriteLine("Ingreso inválido. Formato MM/DD/AAAA.");
+                    Console.WriteLine("\nIngreso inválido. Formato MM/DD/AAAA.");
                 }
                 else if (valor > DateTime.Now)
                 {
-                    Console.WriteLine("El asiento no puede registrarse en el futuro.");
+                    Console.WriteLine("\nEl asiento no puede registrarse en el futuro.");
                 }
                 else
                 {
