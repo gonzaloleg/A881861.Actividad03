@@ -103,8 +103,9 @@ namespace Actividad3
 
             asientos.Add(nuevoAsiento);
 
-            Console.WriteLine("\nAgregando movimiento(s) destino...");
-            codigoCuenta = Auxiliar.ValidarOpcion("Ingrese el código de cuenta:", 11, 34);
+            Console.WriteLine("\nA continuación agregará movimiento(s) destino...");
+            Console.WriteLine("Nota: Si requiere agregar más movimientos al asiento en curso se le solicitará más adelante.");
+            codigoCuenta = Auxiliar.ValidarOpcion("\nIngrese el código de cuenta:", 11, 34);
             debe = Auxiliar.ValidarMonto("\nIngrese el monto para el debe:", 0, 99999999);
             acumuladorDebe = acumuladorDebe+debe;
             haber = Auxiliar.ValidarMonto("\nIngrese el monto para el haber:", 0, 99999999);
